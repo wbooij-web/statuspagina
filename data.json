@@ -1,0 +1,35 @@
+{
+  "updatedAt": "2026-05-31T00:00:00.000Z",
+  "systems": [
+    {
+      "id": "microsoft-365",
+      "name": "Microsoft 365",
+      "status": "green",
+      "note": "Alle diensten zijn beschikbaar."
+    },
+    {
+      "id": "teams-telefonie",
+      "name": "Teams Telefonie",
+      "status": "green",
+      "note": "Bellen en bereikbaarheidsfuncties werken normaal."
+    },
+    {
+      "id": "wifi-scholen",
+      "name": "Wifi scholen",
+      "status": "orange",
+      "note": "Op enkele locaties is de dekking verminderd. ICT onderzoekt dit."
+    },
+    {
+      "id": "topdesk",
+      "name": "TOPdesk",
+      "status": "green",
+      "note": "Meldingen kunnen normaal worden aangemaakt en gevolgd."
+    },
+    {
+      "id": "printen",
+      "name": "Printen",
+      "status": "red",
+      "note": "Printen is tijdelijk niet beschikbaar. Gebruik waar mogelijk digitaal delen."
+    }
+  ]
+}
