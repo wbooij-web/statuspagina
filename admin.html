@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ICT Statusmonitor - Beheer</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Afdeling ICT</p>
+      <h1>Statusmonitor</h1>
+    </div>
+    <nav class="nav">
+      <a href="./index.html">Medewerkers</a>
+      <a class="active" href="./admin.html">Beheer</a>
+    </nav>
+  </header>
+
+  <main class="shell admin-shell" id="admin-content" hidden>
+    <section class="hero admin-hero">
+      <div>
+        <p class="eyebrow">Beheer</p>
+        <h2>Statussen bijwerken en systemen toevoegen</h2>
+        <p class="intro">Pas de status aan, noteer toelichting voor medewerkers en voeg nieuwe onderdelen toe.</p>
+      </div>
+      <a class="primary-link" href="./index.html">Bekijk monitor</a>
+    </section>
+
+    <section class="admin-layout">
+      <form class="panel form-panel" id="system-form">
+        <input type="hidden" id="system-id">
+        <div class="panel-head">
+          <h2 id="form-title">Nieuw onderdeel</h2>
+          <button class="ghost-button compact" id="cancel-edit" type="button" hidden>Annuleren</button>
+        </div>
+
+        <label>
+          Naam systeem
+          <input id="system-name" type="text" placeholder="Bijv. Microsoft 365" required>
+        </label>
+
+        <label>
+          Status
+          <select id="system-status" required>
+            <option value="green">Groen</option>
+            <option value="orange">Oranje</option>
+            <option value="red">Rood</option>
+          </select>
+        </label>
+
+        <label>
+          Opmerking
+          <textarea id="system-note" rows="5" placeholder="Korte toelichting voor medewerkers"></textarea>
+        </label>
+
+        <button class="primary-button" type="submit">Opslaan</button>
+      </form>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Onderdelen</h2>
+            <p>Sleep niet nodig: gebruik bewerken om statussen te wijzigen.</p>
+          </div>
+          <button class="ghost-button compact" id="reset-data" type="button">Voorbeelddata herstellen</button>
+        </div>
+        <div class="admin-list" id="admin-list"></div>
+        <p class="empty-state" id="admin-empty-state" hidden>Er zijn nog geen onderdelen toegevoegd.</p>
+      </section>
+    </section>
+  </main>
+
+  <section class="login-screen" id="login-screen">
+    <form class="login-panel" id="login-form">
+      <p class="eyebrow">Beheer</p>
+      <h2>Inloggen statusbeheer</h2>
+      <p class="login-copy">Alleen beheerders kunnen statussen aanpassen en onderdelen beheren.</p>
+      <label>
+        Wachtwoord
+        <input id="admin-password" type="password" autocomplete="current-password" required>
+      </label>
+      <p class="login-error" id="login-error" hidden>Onjuist wachtwoord. Probeer het opnieuw.</p>
+      <button class="primary-button" type="submit">Inloggen</button>
+    </form>
+  </section>
+
+  <script src="./app.js"></script>
+</body>
+</html>
