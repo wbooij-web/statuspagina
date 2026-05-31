@@ -1,0 +1,6 @@
+"id","naam","status","opmerking","zichtbaar"
+"microsoft-365","Microsoft 365","groen","Alle diensten zijn beschikbaar.","ja"
+"teams-telefonie","Teams Telefonie","groen","Bellen en bereikbaarheidsfuncties werken normaal.","ja"
+"wifi-scholen","Wifi scholen","oranje","Op enkele locaties is de dekking verminderd. ICT onderzoekt dit.","ja"
+"topdesk","TOPdesk","groen","Meldingen kunnen normaal worden aangemaakt en gevolgd.","ja"
+"printen","Printen","rood","Printen is tijdelijk niet beschikbaar. Gebruik waar mogelijk digitaal delen.","ja"

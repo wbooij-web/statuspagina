@@ -1,35 +1,41 @@
-# ICT Statusmonitor - GitHub Pages export
+# ICT Statusmonitor - Google Sheets beheer
 
-Upload de inhoud van deze map naar de repository `wbooij-web/statuspagina`.
+Deze GitHub Pages-versie gebruikt Google Sheets als beheeromgeving.
 
 Publieke pagina's:
 
 - Medewerkers: `https://wbooij-web.github.io/statuspagina/`
-- Beheer: `https://wbooij-web.github.io/statuspagina/admin.html`
+- Beheeruitleg: `https://wbooij-web.github.io/statuspagina/admin.html`
 
-Bestanden:
+## Bestanden voor GitHub
+
+Upload/vervang de inhoud van deze map in de repository `wbooij-web/statuspagina`.
+
+Belangrijkste bestanden:
 
 - `index.html`: medewerkerspagina
-- `admin.html`: beheerpagina
-- `data.json`: gedeelde statusdata
-- `styles.css`, `app.js`: gedeelde styling en logica
-- `status-hero.png`, `vo-campus-logo.png`: lokale afbeeldingen
+- `admin.html`: beheeruitleg
+- `app.js`: leest de Google Sheet CSV
+- `sheet-config.json`: bevat de gepubliceerde Google Sheet CSV-link
+- `data.json`: fallbackdata zolang er nog geen Sheet gekoppeld is
+- `styles.css`, `status-hero.png`, `vo-campus-logo.png`: styling en afbeeldingen
 
-## Beheer gebruiken
+## Google Sheet koppelen
 
-Huidig beheerwachtwoord:
+1. Maak een Google Sheet met het template `ICT-statusmonitor-Google-Sheet-template.xlsx`.
+2. Deel de sheet met je ICT-collega's.
+3. Kies in Google Sheets: `Bestand > Delen > Publiceren op internet`.
+4. Kies tabblad `Statussen`.
+5. Kies formaat `CSV`.
+6. Kopieer de gepubliceerde CSV-link.
+7. Zet die link in `sheet-config.json`:
 
-```text
-ICT2026!
+```json
+{
+  "csvUrl": "https://docs.google.com/spreadsheets/d/e/.../pub?gid=0&single=true&output=csv"
+}
 ```
 
-Daarnaast heeft iedere beheerder een GitHub fine-grained personal access token nodig voor repository `wbooij-web/statuspagina`.
+Daarna leest de medewerkerspagina de statussen uit Google Sheets. Geen GitHub-token meer nodig.
 
-Benodigde rechten:
-
-- Repository access: alleen `wbooij-web/statuspagina`
-- Permissions: `Contents` op `Read and write`
-
-De beheerpagina schrijft wijzigingen naar `data.json` via de GitHub API. De medewerkerspagina leest `data.json` uit GitHub Pages. Na opslaan kan GitHub Pages heel kort nodig hebben om de nieuwe data uit te serveren.
-
-Let op: dit is geschikt voor een kleine interne statuspagina. Voor echte beveiliging en auditlogging is een server-side beheeromgeving beter.
+Let op: Google Sheets en GitHub Pages kunnen kort cachen. Ververs de medewerkerspagina na een paar minuten als wijzigingen niet direct zichtbaar zijn.

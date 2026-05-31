@@ -307,6 +307,12 @@ h2 {
   min-height: 14rem;
 }
 
+.admin-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
 .monitor-hero {
   min-height: 11rem;
   padding: 1.4rem 2rem;
@@ -378,6 +384,44 @@ h2 {
   display: grid;
   grid-template-columns: minmax(280px, 390px) 1fr;
   gap: 1.25rem;
+}
+
+.sheet-admin-layout {
+  grid-template-columns: 1fr 1fr;
+}
+
+.instruction-list {
+  margin: 0;
+  padding: 1.25rem 1.25rem 1.25rem 2.7rem;
+  color: #344054;
+  line-height: 1.65;
+}
+
+.instruction-list li + li {
+  margin-top: .75rem;
+}
+
+.code-block {
+  margin: 1.25rem;
+  padding: 1rem;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: #172033;
+  background: #f7f9fc;
+  font-size: .9rem;
+  line-height: 1.6;
+}
+
+.admin-note {
+  margin: 0 1.25rem 1.25rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.success-text {
+  color: var(--green) !important;
+  font-weight: 800;
 }
 
 .panel {
@@ -490,6 +534,11 @@ textarea {
   .summary,
   .admin-layout {
     grid-template-columns: 1fr;
+  }
+
+  .admin-hero-actions {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .admin-actions {
