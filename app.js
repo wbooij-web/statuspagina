@@ -124,9 +124,27 @@ async function loadConfig() {
   if (location.protocol === "file:") return { csvUrl: "" };
 
   try {
-    return await fetchJson(CONFIG_PATH);
+    const config = await fetchJson(CONFIG_PATH);
+    return { ...config, csvUrl: normalizeCsvUrl(config.csvUrl) };
   } catch {
     return { csvUrl: "" };
+  }
+}
+
+function normalizeCsvUrl(url) {
+  if (!url) return "";
+
+  try {
+    const parsed = new URL(url);
+    if (!parsed.hostname.includes("docs.google.com")) return url;
+
+    const sheetId = parsed.pathname.match(/\/spreadsheets\/d\/([^/]+)/)?.[1];
+    if (!sheetId) return url;
+
+    const gid = parsed.searchParams.get("gid") || parsed.hash.match(/gid=([^&]+)/)?.[1] || "0";
+    return `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=${gid}`;
+  } catch {
+    return url;
   }
 }
 
