@@ -5,8 +5,7 @@ const GITHUB_TOKEN_KEY = "ict-statusmonitor-github-token";
 const DATA_PATH = "data.json";
 const GITHUB_CONFIG = {
   owner: "wbooij-web",
-  repo: "statuspagina",
-  branch: "main"
+  repo: "statuspagina"
 };
 
 const defaultSystems = [
@@ -57,6 +56,7 @@ const monitorStatusOrder = {
 let currentSystems = [];
 let currentUpdatedAt = "";
 let adminReady = false;
+let cachedDefaultBranch = "";
 
 function defaultData() {
   return {
@@ -110,7 +110,8 @@ async function loadStatusData() {
 }
 
 async function getGitHubFile(token) {
-  const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${DATA_PATH}?ref=${GITHUB_CONFIG.branch}`;
+  const branch = await getDefaultBranch(token);
+  const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${DATA_PATH}?ref=${branch}`;
   const response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -119,11 +120,36 @@ async function getGitHubFile(token) {
     }
   });
 
-  if (!response.ok) {
-    throw new Error("GitHub kon data.json niet lezen. Controleer repository en tokenrechten.");
+  if (response.status === 404) {
+    return { sha: null, branch };
   }
 
-  return response.json();
+  if (!response.ok) {
+    throw new Error(`GitHub kon data.json niet lezen (${response.status}). Controleer repository en tokenrechten.`);
+  }
+
+  const file = await response.json();
+  return { ...file, branch };
+}
+
+async function getDefaultBranch(token) {
+  if (cachedDefaultBranch) return cachedDefaultBranch;
+
+  const response = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28"
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`GitHub kon repository-informatie niet lezen (${response.status}). Controleer of je token toegang heeft tot wbooij-web/statuspagina.`);
+  }
+
+  const repository = await response.json();
+  cachedDefaultBranch = repository.default_branch || "main";
+  return cachedDefaultBranch;
 }
 
 function encodeBase64(value) {
@@ -163,13 +189,13 @@ async function saveSystems(systems) {
         timeStyle: "short"
       }).format(new Date())}`,
       content: encodeBase64(`${JSON.stringify(data, null, 2)}\n`),
-      sha: file.sha,
-      branch: GITHUB_CONFIG.branch
+      ...(file.sha ? { sha: file.sha } : {}),
+      branch: file.branch
     })
   });
 
   if (!response.ok) {
-    throw new Error("Opslaan naar GitHub is mislukt. Controleer of het token Contents: Read and write heeft.");
+    throw new Error(`Opslaan naar GitHub is mislukt (${response.status}). Controleer of het token Contents: Read and write heeft.`);
   }
 }
 
