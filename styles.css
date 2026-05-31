@@ -79,7 +79,8 @@ h2 {
 }
 
 .nav a,
-.primary-link {
+.primary-link,
+.ghost-link {
   color: var(--ink);
   text-decoration: none;
 }
@@ -264,7 +265,8 @@ h2 {
 
 .ghost-button,
 .primary-button,
-.primary-link {
+.primary-link,
+.ghost-link {
   min-height: 2.6rem;
   border: 0;
   border-radius: 8px;
@@ -274,7 +276,8 @@ h2 {
   cursor: pointer;
 }
 
-.ghost-button {
+.ghost-button,
+.ghost-link {
   color: var(--blue);
   background: #edf3ff;
 }
