@@ -390,7 +390,7 @@ h2 {
 }
 
 .sheet-admin-layout {
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
 }
 
 .instruction-list {
