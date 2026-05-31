@@ -233,7 +233,7 @@ async function renderMonitor() {
     if (target) target.textContent = currentSystems.filter(system => system.status === status).length;
   }
 
-  document.querySelector("#last-updated").textContent = `${formatUpdated()} (${currentSource})`;
+  document.querySelector("#last-updated").textContent = formatUpdated();
 }
 
 async function renderSheetAdminInfo() {
